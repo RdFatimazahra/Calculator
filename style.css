@@ -19,9 +19,11 @@ position: relative;
 max-width: 300px;
 width: 100%;
 padding:10px 20px 20px ;
-background: #0a0531;
-border-radius: 12px;
+background: #0d073f;
+border-radius: 15px;
 box-shadow: 0px 5px 10px rgb(0, 0,0,0.05);
+border: solid;
+border-color: #74aee1;
 }
 .display {
 height: 80px;
@@ -42,15 +44,23 @@ grid-gap: 10px;
 grid-template-columns: repeat(4, 1fr);
 }
 .buttons button {  
-padding:12px 10px;
-border-radius:6px;
+padding:10px 13px;
+border-radius:10px;
 border: none;
 font-size: 20px;
 cursor: pointer;
-background-color: #eee;
+background-color:#0d073f;
+border:solid;
+border-color: #74aee1;
+color: azure;
+font-size: medium;
 }
 .buttons button:active {
     transform: scale(0.99);
+}
+.buttons .operator{
+color:#74aee1
+
 }
 .operator {
 color: #2f9fff;
@@ -63,16 +73,39 @@ color: #2f9fff;
 }
 
 .buttons button{
-    border-radius: 50px;
+    border-radius: 60px;
+    color: azure;
+    background-color:#0a0531 ;
+    border: solid;
+    border-color:#74aee1
 }
 .buttons .operator{
 background-color: #74aee1;
-border-radius: 50px;
+color: azure;
+border-radius: 60px;
 
 }
+.container{
+width: 90%;
+height: 80%;
+border-radius: 35px;
+border: solid;
+border-color: rgb(103, 171, 203);
+}
 
-
-
+.display {
+    height: 80px;
+    width: 100%;
+    outline: none;
+    border: none;
+    text-align: right;
+    margin-bottom: 10px;
+    font-size: 25px;
+    color:azure;
+    pointer-events: none;
+    background-color: #0a0531;
+    margin-bottom: 80px;
+    }
 
 
 }
