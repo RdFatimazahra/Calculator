@@ -1,36 +1,66 @@
 document.addEventListener("DOMContentLoaded", () => {
     const displayOperation = document.querySelector(".display-operation");
     const displayResult = document.querySelector(".display-result");
-    const display = document.querySelector(".display");
     const buttons = document.querySelectorAll(".buttons button");
 
-    let currentOperation = "";
-    let currentResult = "";
+    let currentOperation = ""; // Opération en cours
+    let lastOperator = null; // Dernier opérateur utilisé
 
     buttons.forEach(button => {
         button.addEventListener("click", () => {
             const btnValue = button.dataset.value;
 
-            if (btnValue === "=") {
-                displayOperation.value = currentOperation;
-                currentResult = evaluateExpression(currentOperation);
-                displayResult.value = currentResult;
-                display.value = currentResult; // Afficher le résultat final dans le champ display
-            } else if (btnValue === "AC") {
-                currentOperation = "";
-                currentResult = "";
-                displayOperation.value = "";
-                displayResult.value = "";
-                display.value = ""; // Effacer le champ display
+            if (btnValue === "AC") {
+                clearCalculator();
             } else if (btnValue === "DEL") {
-                currentOperation = currentOperation.slice(0, -1);
-                displayOperation.value = currentOperation;
+                handleDelete();
+            } else if (btnValue === "=") {
+                handleEqual();
+            } else if (isOperator(btnValue)) {
+                handleOperator(btnValue);
             } else {
                 currentOperation += btnValue;
-                displayOperation.value = currentOperation;
+                updateDisplayOperation();
             }
         });
     });
+
+    const handleDelete = () => {
+        currentOperation = currentOperation.slice(0, -1);
+        updateDisplayOperation();
+    };
+
+    const handleEqual = () => {
+        if (lastOperator !== null && currentOperation !== "") {
+            let result = evaluateExpression(currentOperation);
+            displayResult.value = result;
+            currentOperation = result.toString();
+            lastOperator = null;
+            updateDisplayOperation();
+        }
+    };
+
+    const handleOperator = (operator) => {
+        if (currentOperation !== "") {
+            if (lastOperator !== null) {
+                handleEqual(); // Calcule le résultat avant d'ajouter le nouvel opérateur
+            }
+            currentOperation += operator;
+            lastOperator = operator;
+            updateDisplayOperation();
+        }
+    };
+
+    const clearCalculator = () => {
+        currentOperation = "";
+        lastOperator = null;
+        updateDisplayOperation();
+        displayResult.value = "";
+    };
+
+    const updateDisplayOperation = () => {
+        displayOperation.value = currentOperation;
+    };
 
     const evaluateExpression = (expression) => {
         try {
@@ -39,5 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
             return "Error";
         }
+    };
+
+    const isOperator = (value) => {
+        return value === "+" || value === "-" || value === "*" || value === "/";
     };
 });
